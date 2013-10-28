@@ -3,3 +3,6 @@ markdown: redcarpet
 pygments: true
 timezone: Europe/Berlin
 encoding: UTF-8
+assets:
+    js_compressor: uglifier
+    css_compressor: sass
