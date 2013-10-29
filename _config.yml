@@ -7,3 +7,4 @@ debug: true
 assets:
     js_compressor: uglifier
     css_compressor: sass
+permalink: /:year:month/:title.html
