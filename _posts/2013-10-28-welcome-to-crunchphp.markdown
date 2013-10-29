@@ -11,7 +11,7 @@ While playing around -- it took me the promised 5 minutes to set it up --
 I wonder why I've not started with it earlier, because lets get honest: Most
 pages _are_ static. So here I am: An slightly ugly looking page with the simplest and
 easiest "blog-system" I've ever seen. That may be an interesting start point for another
-attempt of an english speaking blog (for those who know me and/or just speak german:
+attempt of an English speaking blog (for those who know me and/or just speak german:
 My heavily outdated [German blog](http://www.kingcrunch.de) is still available). With
 code highlighting, images and such I have all I need. However, the domain doesn't fit that
 good, because an English language blog with a German .de-domain? I should be a more
