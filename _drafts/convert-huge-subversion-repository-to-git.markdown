@@ -9,12 +9,13 @@ at one place and only one system to manage. If you ever consider to switch over 
 it is a bad idea. Usually transforming a subversion into a git repository is quite easy,
 but that is only valid for repositories of a reasonable size. Multi-project repository
 tend to grow quite big. The usual transformation via `git svn clone <svn-url>` extremely
-slows down on huge repositories.
+slows down on huge repositories. I once had to convert _some_ projects from a SVN-repository
+with at the end 141 more or less active projects and around 430000 commits...
 
 A short overview of what is required
 
 * Time. It doesn't take weeks anymore, but it still requires some time (I got it working in
-    around 4 hours at the end)
+    around 4 hours at the end, but _without_ the creating the local SVN mirror)
 * A _fast_ storage. The whole process is extremely IO-intensive. A SSD works fine, even better
     --- if there is enough RAM available --- is a RAM-disk of around 4 to 8 GB.
 * [svnrdump](http://svnbook.red-bean.com/en/1.7/svn.ref.svnrdump.c.dump.html). This is part
@@ -29,31 +30,40 @@ A short overview of what is required
 
 Step 1: Create a local copy
 ====
-It's a mess to work with the remote SVN all the time, so the first step is to clone the
-remote repository onto the local machine. It's also much smaller, because here we already
-only download the code we are actually interested int
+If you have access via filesystem to the repository you can skip this step.
+
+Downloading the repository parallel in chunks bypass the limitations of HTTP as transport a little
+bit. This is quite time consuming (little under 1.5h), but once you have a local mirror, you can
+always update it with missing commits with `--incremental` whenever needed.
 
 ```bash
-svnrdump dump --revision 0:20000 http://example.com/path/to/svn/MyProject | gzip -9 > MyProject.1.svn.gz
-svnrdump dump --revision --incremental 20001:40000 http://example.com/path/to/svn/MyProject | gzip -9 > MyProject.2.svn.gz
-svnrdump dump --revision --incremental 40001:60000 http://example.com/path/to/svn/MyProject | gzip -9 > MyProject.3.svn.gz
+svnrdump dump               --revision     0:20000 \
+    http://example.com/path/to/svn/MyProject | gzip -9 > MyProject.00.svn.gz
+svnrdump dump --incremental --revision 20001:40000 \
+    http://example.com/path/to/svn/MyProject | gzip -9 > MyProject.02.svn.gz
+svnrdump dump --incremental --revision 40001:60000 \
+    http://example.com/path/to/svn/MyProject | gzip -9 > MyProject.03.svn.gz
 # And so on
+
+mkdir MyProject.svn
+
+# Skip this, if you don't want to use a ramdisk, but live with the consequences ...
+sudo mount -t tmpfs none MyProject.svn
+svnadmin create MyProject.svn
+
+# Remind to adjust this number
+for i in {00..21}; do
+    gunzip < MyProject.$i.svn.gz | svnadmin load --quiet --force-uuid MyProject.svn;
+done;
+
+svnadmin dump --quiet MyProject.svn | gzip -9 > MyProject.svn/MyProject.svn.gz
+
+mv MyProject.svn/MyProject.svn.gz /path/to/backup/
 ```
 
-Hint: Execute this in parallel. HTTP is slow, so this may take the longest time. You can choose
-chunk sizes at will, but is important, that the first one doesn't have the `--incremental`-flag,
-whereas every subsequent call has. And why gzip? Actually the file size is not the problem, but
-it can take some load from the disk.
+The import of the full-backup into a ramdisk-SVN-repository is quite fast (took me
+around 5min), so it's fine to just keep this and rebuild the repo a new.
 
-```bash
-svnadmin create MyProject
-gunzip < MyProject.1.svn.gz | svnadmin load -q --force-uuid
-gunzip < MyProject.2.svn.gz | svnadmin load -q --force-uuid
-gunzip < MyProject.3.svn.gz | svnadmin load -q --force-uuid
-```
-
-Now you have a local copy of your repository only containing the code of `MyProject`. You
-can easily update this one later with an additional `svnrdump`/`svmadmin load`.
 
 Step 2: Prepare export
 ===
@@ -65,7 +75,7 @@ Note, that you must change the path to your local SVN
 
 ```bash
 #!/usr/bin/env bash
-authors=$(svn log -q file:///path/to/local/svn | grep -e '^r' | awk 'BEGIN { FS = "|" } ; { print $2 }' | sort | uniq)
+authors=$(svn log -q file:///absolute/path/to/MyProject.svn | grep -e '^r' | awk 'BEGIN { FS = "|" } ; { print $2 }' | sort | uniq)
 for author in ${authors}; do
   echo "${author} = NAME <USER@DOMAIN>";
 done
