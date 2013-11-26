@@ -1,4 +1,6 @@
 name: CrunchPHP.de
+description: Blog about code snippets and programming things. Mostly about PHP. Or related.
+url: http://www.crunchphp.de
 markdown: redcarpet
 pygments: true
 timezone: Europe/Berlin
@@ -8,4 +10,3 @@ assets:
     js_compressor: uglifier
     css_compressor: sass
 permalink: /:year:month/:title.html
-url: http://www.crunchphp.de
