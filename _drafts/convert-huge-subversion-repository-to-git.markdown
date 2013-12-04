@@ -95,7 +95,8 @@ Step 3: Export
 ===
 
 The ugliest part is creating the "rules"-file. `svn-all-fast-export` expects a rules file, that contains
-rules on how to map paths in SVN to git branches and tags. And example
+rules on how to map paths in SVN to git branches and tags. For further options, see
+[Gitorius samples|https://gitorious.org/svn2git/mgedmin-svn2git/source/70b3618fa06355684616cd1611cad7cae6172cfb:samples]
 
 ```
 create repository MyProject
@@ -116,13 +117,13 @@ match /MyProject/tags/([^/]+)/
   branch tag/\1
 end match
 
-match /
-  # ignore everything we don't know (remove/comment this to find missing mappings)
-end match
-
 match /MyProject/tags/([^/]+)/
   repository SGFD
   branch refs/tags/\1
+end match
+
+match /
+  # ignore everything we don't know (remove/comment this to find missing mappings)
 end match
 ```
 

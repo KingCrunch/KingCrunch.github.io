@@ -4,9 +4,18 @@ layout: default
 <h2>{{ page.title }}</h2>
 <p class="meta">
     {{ page.date | date_to_string }}
-    <a href="https://flattr.com/submit/auto?user_id=KingCrunch&url={{ site.url | cgi_escape }}{{ page.url | cgi_escape }}&title={{ page.title | cgi_escape }}&category=text&description=&tags=" target="_blank"><img src="//api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0"></a>
+
 </p>
 <div class="post">
 {{ content }}
 </div>
-
+<a href="https://flattr.com/submit/auto?user_id=KingCrunch&url={{ site.url | cgi_escape }}{{ page.url | cgi_escape }}&title={{ page.title | cgi_escape }}&category=text&description=&tags=" target="_blank"><img src="//api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0"></a>
+<script src="http://coinwidget.com/widget/coin.js"></script>
+<script>
+    CoinWidgetCom.go({
+        wallet_address: "133bKZHmNbyRMd1dxc8D8CSgoXNyhfKT9d", currency: "bitcoin", counter: "hide", alignment: "al", qrcode: true, auto_show: false, lbl_button: "Donate", lbl_address: "My Bitcoin Address:", lbl_count: "donations", lbl_amount: "BTC"
+    });
+    CoinWidgetCom.go({
+        wallet_address: "Lak8WMXuDXznKbWdYXsKJPq7pb5Pe8icej", currency: "litecoin", counter: "hide", alignment: "al", qrcode: true, auto_show: false, lbl_button: "Donate", lbl_address: "My Litecoin Address:", lbl_count: "donations", lbl_amount: "LTC"
+    });
+</script>
