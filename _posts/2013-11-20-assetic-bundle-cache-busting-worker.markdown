@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Assetic Bundle includes cache busting worker"
-categories: crunchphp
 ---
+{% include JB/setup %}
 
 With [PR#249](https://github.com/symfony/AsseticBundle/pull/240) the [AsseticBundle](https://github.com/symfony/AsseticBundle)
 (by default included in every [symfony-standard](https://github.com/symfony/symfony-standard)-based [Symfony2](http://symfony.com/)
