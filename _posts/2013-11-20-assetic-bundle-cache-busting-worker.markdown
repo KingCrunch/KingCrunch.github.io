@@ -1,6 +1,8 @@
 ---
 layout: post
 title:  "Assetic Bundle includes cache busting worker"
+category: "php"
+tags: ["assetic"]
 ---
 {% include JB/setup %}
 

@@ -2,6 +2,7 @@
 layout: post
 title:  "Welcome to crunchphp!"
 date:   2013-10-28 19:42:42
+category: "meta"
 ---
 {% include JB/setup %}
 

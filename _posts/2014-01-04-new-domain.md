@@ -2,7 +2,7 @@
 layout: post
 title: "New Domain"
 description: ""
-category:
+category: "meta"
 tags: []
 ---
 {% include JB/setup %}
