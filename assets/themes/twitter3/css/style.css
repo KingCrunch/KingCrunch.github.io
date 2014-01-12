@@ -1,3 +1,7 @@
+body {
+    padding-bottom: 70px;
+}
+
 /* posts index */
 .post > h3.title {
   position: relative;
