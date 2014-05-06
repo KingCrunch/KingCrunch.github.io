@@ -2,7 +2,7 @@
 layout: post
 title: "Whats about YAML?"
 description: ""
-category: "code"
+category: "development"
 tags: ["codestyle"]
 ---
 {% include JB/setup %}

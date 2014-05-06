@@ -1,8 +1,15 @@
 ---
 layout: post
 title:  "How to transform a project from a huge subversion repository to git"
-categories: subversion git
+categories: "maintainance"
+tags: ["subversion","git"]
 ---
+
+| Disclaimer: I've written this post a while ago and I am not entirely sure how accurate it
+| was the time I stopped validating it. So take with care, always keep a backup. The information
+| provided here might be outdated, or even wrong. I hope, it still helps someone getting rid of
+| overly large SVN-repositories.
+
 
 Multi-project subversion repositories sound convenient at the first glance: Everything
 at one place and only one system to manage. If you ever consider to switch over to git

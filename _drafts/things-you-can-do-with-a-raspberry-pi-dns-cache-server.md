@@ -2,7 +2,7 @@
 layout: post
 title: "Things you can do with a Raspberry Pi: DNS Cache server"
 description: ""
-category: "raspberry-pi"
+category: "server"
 tags: ["raspberry-pi"]
 ---
 {% include JB/setup %}
