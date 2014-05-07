@@ -5,10 +5,10 @@ categories: "maintainance"
 tags: ["subversion","git"]
 ---
 
-| Disclaimer: I've written this post a while ago and I am not entirely sure how accurate it
-| was the time I stopped validating it. So take with care, always keep a backup. The information
-| provided here might be outdated, or even wrong. I hope, it still helps someone getting rid of
-| overly large SVN-repositories.
+> Disclaimer: I've written this post a while ago and I am not entirely sure how accurate it
+> was the time I stopped proof-reading it. So take with care and always keep a backup. The
+>information provided here might be outdated, or even wrong. I hope, it still helps someone
+> getting rid of overly large SVN-repositories.
 
 
 Multi-project subversion repositories sound convenient at the first glance: Everything
