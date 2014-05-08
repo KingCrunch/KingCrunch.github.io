@@ -3,6 +3,7 @@ permalink: /:year:month/:title.html
 exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
 markdown: redcarpet
 pygments: true
+exclude: ["bundle"]
 timezone: Europe/Berlin
 encoding: UTF-8
 
@@ -18,6 +19,9 @@ author :
   #feedburner : feedname
 
 production_url : http://kingcrunch.eu
+
+gems:
+  - jekyll-sitemap
 
 JB :
   version : 0.3.0
