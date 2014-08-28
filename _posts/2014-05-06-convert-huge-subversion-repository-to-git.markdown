@@ -43,7 +43,7 @@ local copy of a remote repository, so that we don't have to perform every operat
 This example downloads 10000-commit chunks in parallel up to commit 400000. Remember to update the values,
 so they match your repository. Downloading in chunks bypass the limitations of the HTTP a little bit.
 
-~~~bash
+{% highlight bash %}
 # First one without "--incremental"
 svnrdump dump \
     --revision 0:10000 \
@@ -67,7 +67,7 @@ done;
 svnadmin dump --quiet MyProject.svn | gzip -9 > MyProject.svn/MyProject.svn.gz
 
 mv MyProject.svn/MyProject.svn.gz /path/to/backup/
-~~~
+{% endhighlight %}
 
 The import of the full-backup into a ramdisk-SVN-repository is quite fast (took me
 around 5min), so it's fine to just keep this and rebuild the repo a new after a restart.
@@ -80,17 +80,17 @@ SVN tracks committers only by an username, but git by an email-address with an a
 optional and arbirtrary (display-)name. Create a script, paste the following code into it
 and make it executable. Note, that you must change the path to your _local_ SVN-repository.
 
-~~~bash
+{% highlight bash %}
 #!/usr/bin/env bash
 authors=$(svn log -q file:///absolute/path/to/MyProject.svn | grep -e '^r' | awk 'BEGIN { FS = "|" } ; { print $2 }' | sort | uniq)
 for author in ${authors}; do
   echo "${author} = ${author} <${author}@example.com>";
 done
-~~~
+{% endhighlight %}
 
-~~~bash
+{% highlight bash %}
 ./extract-authors.sh > authors.txt
-~~~
+{% endhighlight %}
 
 Fix the content. `git-all-fast-export` (and as far as I know all the other tools too), expect
 a format `svn-user-name = committer name <commiter-email@example.com>`. It's really easy. If you don't know
@@ -103,7 +103,7 @@ The ugliest part is creating the "rules"-file. `svn-all-fast-export` expects a r
 rules on how to map paths in SVN to git branches and tags. For further options, see
 [Gitorius samples|https://gitorious.org/svn2git/mgedmin-svn2git/source/70b3618fa06355684616cd1611cad7cae6172cfb:samples]
 
-~~~
+{% highlight bash %}
 create repository MyProject
 end repository
 
@@ -130,14 +130,14 @@ end match
 match /
   # ignore everything we don't know (remove/comment this to find missing mappings)
 end match
-~~~
+{% endhighlight %}
 
 As you can see every mapping is prefixed with "MyProject", because this tool isn't able
 to strip the project path itself.
 
-~~~bash
+{% highlight bash %}
 svn-all-fast-export --identity-map=authors.txt --rules=my-rules.rules /path/to/local/svn
-~~~
+{% endhighlight %}
 
 If everything worked fine, you know should have the bare git repository in a subfolder named
 `MyProject`. Theoretically you are finished now.
@@ -147,18 +147,18 @@ Step 4: Cleanup
 First we simply drop all already merged branches. If they are already merged, you don't need
 them anymore and you can re-create the branch, when you need it again.
 
-~~~bash
+{% highlight bash %}
 git branch -d `git branch --merged`
-~~~
+{% endhighlight %}
 
 
 
 [BFG here]
 
-~~~bash
+{% highlight bash %}
 git reflog expire --expire=now
 git gc --aggressive --prune=now
-~~~
+{% endhighlight %}
 
 One thing, that is a little bit annoying is, that for whatever reason `svn-all-fast-export` exports
 the `svn:ignore` property into an `.svnignore` file. With some git "black magic" you can rename
@@ -166,11 +166,11 @@ the file in the _whole_ repository. I recommend it as the last step, because it 
 time consuming step when handling with the git repository, but it is at least faster, when the
 repository is already smaller.
 
-~~~bash
+{% highlight bash %}
 git filter-branch --index-filter 'git ls-files -s \
     | sed "s-\(\t\"*\).svnignore-\1.gitignore-" \
     | GIT_INDEX_FILE=$GIT_INDEX_FILE.new git update-index --index-info && mv "$GIT_INDEX_FILE.new" "$GIT_INDEX_FILE"' HEAD
-~~~
+{% endhighlight %}
 
 However, this isn't completely sufficient. `svn-all-fast-export` doesn't convert
 `svn:ignore`-properties in subfolders. A good start to fix this manually (at least in the

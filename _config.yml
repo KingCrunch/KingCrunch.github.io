@@ -24,6 +24,7 @@ production_url : http://kingcrunch.eu
 
 gems:
   - jekyll-sitemap
+  - pygments
 
 JB :
   version : 0.3.0
