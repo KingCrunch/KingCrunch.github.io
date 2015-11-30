@@ -1,11 +1,7 @@
 ---
 layout: post
 title: "Setting up SSI on nginx to work with Symfony 2.6"
-description: ""
-category: "development"
-tags: []
 ---
-{% include JB/setup %}
 
 With the upcoming [Symfony](http://symfony.com/) 2.6 [SSI support](https://github.com/symfony/symfony/commit/bf140a8487a19d767b9b57102e74c842e8f0a208)
 is directly built-in. For me this is pretty exciting, because it is the first merged PR, that is more than a minor

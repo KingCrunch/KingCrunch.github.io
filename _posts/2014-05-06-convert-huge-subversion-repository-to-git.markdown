@@ -1,8 +1,6 @@
 ---
 layout: post
 title:  "How to transform a project from a huge subversion repository to git"
-categories: "maintainance"
-tags: ["subversion","git"]
 ---
 
 > Disclaimer: I've written this post a while ago and I am not entirely sure how accurate it

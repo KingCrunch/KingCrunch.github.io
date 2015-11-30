@@ -2,10 +2,7 @@
 layout: post
 title: "Strings are constants too"
 description: "Why constants sometimes aren't worth it, or make things worse"
-category: development
-tags: ["php","development"]
 ---
-{% include JB/setup %}
 
 In our development team, we have a (more or less strict) rule: If it's a constant value,
 make a constant out of it. In many cases this makes sense, or at least increase clarity,

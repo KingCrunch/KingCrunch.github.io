@@ -2,9 +2,7 @@
 layout: post
 title:  "Welcome to crunchphp!"
 date:   2013-10-28 19:42:42
-category: "meta"
 ---
-{% include JB/setup %}
 
 Actually this site doesn't serve any deeper purpose. I own the domain and I have
 some free space. Also it allows me to get into [Jekyll](http://jekyll.com) for static site generations.

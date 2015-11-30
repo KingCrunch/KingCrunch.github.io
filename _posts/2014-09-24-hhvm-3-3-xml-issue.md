@@ -1,11 +1,7 @@
 ---
 layout: post
 title: "XML-issue with HHVM 3.3"
-description: ""
-category: "development"
-tags: ["hhvm","xml"]
 ---
-{% include JB/setup %}
 
 I tried to get [Symfony](http://symfony.com/) running on [HHVM 3.3](http://hhvm.com/blog/6239/hhvm-3-3-0),
 because 3.2 caused some annoying issues. However, 3.3 didn't run out of the box

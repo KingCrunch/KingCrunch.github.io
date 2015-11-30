@@ -1,11 +1,7 @@
 ---
 layout: post
 title: "Things you can do with a Raspberry Pi: DNS Cache server"
-description: ""
-category: "server"
-tags: ["raspberry-pi"]
 ---
-{% include JB/setup %}
 
 If you have a Raspberry Pi and you don't know, what do to with it: Whats about a DNS-Cache-server?
 There are phones, tablets, some laptops and desktop-PCs, that can make use of it. And it doesn't need
