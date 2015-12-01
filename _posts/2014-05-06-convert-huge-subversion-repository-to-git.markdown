@@ -99,7 +99,7 @@ Step 3: Export
 
 The ugliest part is creating the "rules"-file. `svn-all-fast-export` expects a rules file, that contains
 rules on how to map paths in SVN to git branches and tags. For further options, see
-[Gitorius samples|https://gitorious.org/svn2git/mgedmin-svn2git/source/70b3618fa06355684616cd1611cad7cae6172cfb:samples]
+[Gitorius samples](https://gitorious.org/svn2git/mgedmin-svn2git/source/70b3618fa06355684616cd1611cad7cae6172cfb:samples)
 
 {% highlight bash %}
 create repository MyProject
