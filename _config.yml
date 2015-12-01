@@ -1,6 +1,7 @@
 # Jekyll configuration
 
 name: KingCrunchs
+email_print: "sebastian[at]krebs.one"
 description: Thoughts of a Developer from Berlin.
 
 # url is currently only used only for the RSS feed in feed.xml
