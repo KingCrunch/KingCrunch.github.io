@@ -36,7 +36,7 @@ pacman -S mitmproxy
 Debian has `mitmproxy` in their official repositories too
 
 {% highlight bash %}
-apt-get install
+apt-get install mitmproxy
 {% endhighlight %}
 
 However, the version [0.10 in Jessie](https://packages.debian.org/jessie/mitmproxy) is obviously
