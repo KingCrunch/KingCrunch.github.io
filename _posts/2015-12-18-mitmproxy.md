@@ -12,7 +12,7 @@ pretty quiet in this blog anyway :)
 # mitmproxy
 
 [`mitmproxy`](http://docs.mitmproxy.org/) ("Man-In-The-Middle proxy", 
-[Github](https://github.com/mitmproxy/mitmproxy)) is a  small tool, that startsup a HTTP(s)-proxy, 
+[Github](https://github.com/mitmproxy/mitmproxy)) is a small HTTP(s)-proxy, 
 that allows you to observe, inspect and manipulate requests. So every time you wonder, what you 
 your application and/or services send and receive to and from other services you can startup 
 `mitmproxy` and configure the proxy.
@@ -20,6 +20,9 @@ your application and/or services send and receive to and from other services you
 `mitmproxy` starts curses-like commandline UI. There is also [`mitmdump`](http://docs.mitmproxy.org/en/stable/mitmdump.html),
 which provides "tcpdump-like functionality". In other words, `mitmproxy` is the
 interactive ui, whereas `mitmdump` is a programmatic helper.
+
+This post is a quick introduction. `mitmproxy` can do much more for you, like
+manipulating request, avoid any caching, …. I suggest to [read the documentation](http://docs.mitmproxy.org/en/stable/introduction.html).
 
 # Installation
 
@@ -41,8 +44,8 @@ older. The same for ubuntu: [Wily comes with 0.11](http://packages.ubuntu.com/wi
 and there is no official package for Precise (the LTS).
 
 So, why do I tell you about the available versions? It seems this tools is under heavy
-development and the Arch-version I use and I'll base this post on has some options
-and probably abilities the other versions don't have.
+development and the Arch-version I use has some options and probably abilities the other
+versions don't have. It makes sense to always try the latest version.
 
 # Startup
 
@@ -52,9 +55,7 @@ To start `mitmproxy`, just ... well, start it.
 mitmproxy --port 8000
 {% endhighlight %}
 
-This will let `mitmproxy` listen on Port `8000`. There are many, many other options.
-Just try `mitmproxy --help`. Now that the proxy is running, you only need to use
-it.
+This will let `mitmproxy` listen on Port `8000`.
 
 On the commandline for most tools you can set the environment variables `HTTP_PROXY`
 and `HTTPS_PROXY`. For all popular browser there are proxy-switcher plugins, that
@@ -64,46 +65,43 @@ should provide a "proxy"-setting somehow somewhere. For example Guzzle let you [
 a proxy during for a request](http://docs.guzzlephp.org/en/5.3/clients.html#proxy), or as
 [default during instanciation](http://docs.guzzlephp.org/en/5.3/clients.html#creating-a-client).
 
-There are also [several ways to let `mitmproxy` watch the traffic](http://docs.mitmproxy.org/en/stable/modes.html)
-to watch more complex infrastructures.
+There are also [several ways to let `mitmproxy` watch the traffic](http://docs.mitmproxy.org/en/stable/modes.html),
+if you have to handle more complex infrastructures
 
 # Watch
-
-TBA!
 
 You should see some requests coming in now. For example when I request [kingcrunch.eu/](http://kingcrunch.eu/)
 I can see this:
 
-<an image here>
+![Overview](/images/mitmproxy-overview.png)
 
-Seeing the number of requests, the request uri response status at a glance is already pretty
-useful, but you can go into single request. Just use the cursor keys, to select one and
-enter to open the details.
+This is the overview. You can already see some useful infos, but especially you can
+see _all_ requests made since startup. With the arrow keys you can now select one entry
+and with `Enter` open the details. Use `Tab` to switch between Request- and Response-Infos and 
+details about the connection.
 
-<an image here>
+![Request](/images/mitmproxy-request.png)
 
-Once it is open you can use `TAB` to switch between request, response and ???
+![Response](/images/mitmproxy-response.png)
 
-<an image (response) here>
+![Details](/images/mitmproxy-details.png)
 
 # HTTPS
 
-You can intercept HTTPS connections too. How does this work? You have to _trust_
-`mitmproxy`s certificate. This one is especially created for your local machine, so
-you should keep the private key private, else it makes you vulnerable for _real_
-mitm-attacks. After you managed to trust this certificate `mitmproxy` will create
-a new certificate on-the-fly for every HTTPS you want to investigate.
+You may notice, that `https://kingcrunch.eu/` should be SSL-encrypted, but `mitmproxy`
+is still able to track it. To do so `mitmproxy` actually performs an
+"[Mitm-Attack](https://en.wikipedia.org/wiki/Man-in-the-middle_attack)" by creating
+a custom certificate for the requested domain on-the-fly. The tool creates a special 
+CA-certificate for your local machine. To avoid "unsecure connection"-warnings
+you can trust this certificate, but You really should keep the private key private, 
+else it makes you vulnerable for _real_ mitm-attacks.
 
-You can find the self-generated CA-certificates in `~/.mitmproxy/mitmproxy-ca-cert.*`.
+You can find the self-generated CA-certificate in `~/.mitmproxy/mitmproxy-ca-cert.*`.
 There is one `.p12` for use with windows, one `.pem` for use with non-windows systems, and
 one `.crt`, which is actually a `.pem`, but with a different extension for use with
 android. You can also visit [mitm.it](http://mitm.it). This will show you several
 download links, when the traffic is passed through the proxy. Else you'll a simple
 static page from the real `mitm.it`-domain telling you, that you setup your proxy first.
-
-It's worth to mentioned, that you don't need to trust this certificates. You'll
-see a browser warning every time you request a page via HTTPS, but because it's mostly
-for debugging and development, it's fine I think.
 
 In Arch installing a certificate uses [`trust`](https://www.archlinux.org/news/ca-certificates-update/).
 
@@ -119,4 +117,16 @@ cp ~/.mitmproxy/mitmproxy-ca-cert.pem /usr/local/share/ca-certificates/
 update-ca-certificates
 {% endhighlight %}
 
-Thats it.
+In Android after downloading the certificate via http://mitm.it the OS already asks,
+if it should install it.
+
+# Summary
+
+For me `mitmproxy` already served well. The setup is pretty simple, because HTTP-clients
+from "real" clients like browser, over programmatic browser in form of libraries, to
+embedded clients (think of android apps) should be able to send its traffic through a proxy.
+
+The other (bigger) benefit is, that once you have it up and running you can see
+all requests/responses made since start. When you see something strange, you don't have
+to redo everything and watch logs. I also saw requests made be the application, that shouldn't
+happen at all, or requests were made in the wrong order.
