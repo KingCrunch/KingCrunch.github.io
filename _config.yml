@@ -25,10 +25,16 @@ comments: false
 permalink: /:year/:month/:title
 paginate: 3
 
-highlighter: pygments
-markdown: redcarpet
-redcarpet:
-  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "with_toc_data"]
+highlighter: rouge
+markdown: kramdown
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+syntax-highlighting:
+  enabled : true
+  css: syntax.css
 
 exclude: ['README.md', 'LICENSE','bundle']
 gems: [jekyll-paginate]

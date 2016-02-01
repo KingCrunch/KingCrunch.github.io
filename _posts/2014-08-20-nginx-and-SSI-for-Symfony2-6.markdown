@@ -7,7 +7,7 @@ With the upcoming [Symfony](http://symfony.com/) 2.6 [SSI support](https://githu
 is directly built-in. For me this is pretty exciting, because it is the first merged PR, that is more than a minor
 addition, or bugfix. However, setting up [nginx](http://nginx.org/) wasn't that flawless at the end. More about that later in this post.
 
-{% highlight nginx %}
+```nginx
 server {
     server_name domain.tld www.domain.tld;
     root /var/www/project/web;
@@ -28,7 +28,7 @@ server {
     error_log /var/log/nginx/project_error.log;
     access_log /var/log/nginx/project_access.log;
 }
-{% endhighlight %}
+```
 
 The SSI-implementation behaves like the long existing [ESI-implementation](http://symfony.com/doc/current/book/http_cache.html#using-esi-in-symfony2),
 which means you [have to enable it on server-side too](http://symfony.com/doc/current/cookbook/cache/varnish.html) [^1].
@@ -42,7 +42,7 @@ only covers unconditional SSI: It tries to find and replace SSI-tags, even if th
 However, we still don't want anybody outside to see this, so we will remove it.
 
 
-{% highlight nginx %}
+```nginx
 location ~ ^/(app|app_dev|config)\.php(/|$) {
     ssi on;
 
@@ -51,7 +51,7 @@ location ~ ^/(app|app_dev|config)\.php(/|$) {
     fastcgi_param HTTP_SURROGATE_CAPABILITY symfony2="SSI/1.0";
     fastcgi_hide_header SURROGATE_CONTROL;
 }
-{% endhighlight %}
+```
 
 While this was as simple as it could be, now here comes the ugliness: It doesn't work! If there is a SSI-tag, it will end
 up in an infinite loop...
@@ -59,11 +59,11 @@ up in an infinite loop...
 The problem is not directly visible in our configuration, because it comes from the default `fastcgi_params`. This
 file contains (beside others) this line:
 
-{% highlight nginx %}
+```nginx
 # [..]
 fastcgi_param REQUEST_URI $request_uri;
 # [..]
-{% endhighlight %}
+```
 
 Digging further we can find something in the [nginx Manual](http://nginx.org/en/docs/http/ngx_http_core_module.html#var_request_uri),
 that describes, what this means:
@@ -89,7 +89,7 @@ solution, that at least works. The downside is, that now URIs like `example.com/
 `app.php/`) doesn't work anymore.
 
 
-{% highlight nginx %}
+```nginx
 server {
     server_name domain.tld www.domain.tld;
     root /var/www/project/web;
@@ -117,7 +117,7 @@ server {
     error_log /var/log/nginx/project_error.log;
     access_log /var/log/nginx/project_access.log;
 }
-{% endhighlight %}
+```
 
 I had something in mind with a named location, but I hadn't followed it any further for now.
 I'll probably come back to this later.

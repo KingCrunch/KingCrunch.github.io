@@ -29,15 +29,15 @@ manipulating request, avoid any caching, …. I suggest to [read the documentati
 Arch provides `mitmproxy` in its [Community repository](https://www.archlinux.org/packages/community/any/mitmproxy/).
 The version is `0.15` (2015-12-05).
 
-{% highlight bash %}
+```bash
 pacman -S mitmproxy
-{% endhighlight %}
+```
 
 Debian has `mitmproxy` in their official repositories too
 
-{% highlight bash %}
+```bash
 apt-get install mitmproxy
-{% endhighlight %}
+```
 
 However, the version [0.10 in Jessie](https://packages.debian.org/jessie/mitmproxy) is obviously
 older. The same for ubuntu: [Wily comes with 0.11](http://packages.ubuntu.com/wily/mitmproxy)
@@ -51,9 +51,9 @@ versions don't have. It makes sense to always try the latest version.
 
 To start `mitmproxy`, just ... well, start it.
 
-{% highlight bash %}
+```bash
 mitmproxy --port 8000
-{% endhighlight %}
+```
 
 This will let `mitmproxy` listen on Port `8000`.
 
@@ -105,17 +105,17 @@ static page from the real `mitm.it`-domain telling you, that you setup your prox
 
 In Arch installing a certificate uses [`trust`](https://www.archlinux.org/news/ca-certificates-update/).
 
-{% highlight bash %}
+```bash
 cp ~/.mitmproxy/mitmproxy-ca-cert.pem /etc/ca-certificates/trust-source/anchors/
 trust extract-compat
-{% endhighlight %}
+```
 
 Debian makes use of the probably more widely known `update-ca-certificates`
 
-{% highlight bash %}
-cp ~/.mitmproxy/mitmproxy-ca-cert.pem /usr/local/share/ca-certificates/
-update-ca-certificates
-{% endhighlight %}
+```console
+$ cp ~/.mitmproxy/mitmproxy-ca-cert.pem /usr/local/share/ca-certificates/
+$ update-ca-certificates
+```
 
 In Android after downloading the certificate via http://mitm.it the OS already asks,
 if it should install it.

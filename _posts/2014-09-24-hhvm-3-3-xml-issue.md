@@ -17,9 +17,9 @@ instead.
 
 To sum it up: To get it Symfony working again, just add this to your `php.ini`
 
-{% highlight ini %}
+```ini
 hhvm.libxml.ext_entity_whitelist = file
-{% endhighlight %}
+```
 
 The security implications should be relatively small, because usually you don't
 have any malicious entity-files on your local disc.

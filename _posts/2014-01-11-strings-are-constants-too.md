@@ -8,12 +8,12 @@ In our development team, we have a (more or less strict) rule: If it's a constan
 make a constant out of it. In many cases this makes sense, or at least increase clarity,
 or readability.
 
-{% highlight php %}
+```php
 class Constant {
     const HOUR = 3600;
     const DEFAULT_TIMEOUT = 120;
 }
-{% endhighlight %}
+```
 
 (Aside: We haven't left the "classes for everything"-paradigm yet)
 
@@ -21,20 +21,20 @@ As you can see both values have at least a small semantic value and either incre
 readability (`HOUR`), or may change over time. But sometimes during code-reviews I
 see comments like (simplified example)
 
-{% highlight php %}
+```php
 date('H');
 // Constant string: Make a constant out of it
-{% endhighlight %}
+```
 
 Lets assume I make a (class-)constant out of it. May it change some time in the future?
 Quite sure no. Can it make anything clearer? If you are aware of [the manual](http://php.net/function.date)
 (hopefully you are) probably not. Does it increase readability? In this case
 it can make things even _worse_ (maybe not that obvious at first glance)
 
-{% highlight php %}
+```php
 use Foo\Bar\Constant;
 date(Constant::HOUR);
-{% endhighlight %}
+```
 
 So why is this worse? It is longer, what isn't bad on it's own, but just unnecessary,
 it has a reference to a (otherwise) unrelated class, what is also acceptable,  and it
@@ -42,14 +42,14 @@ _decreases_ clarity, because it's name doesn't point out, whether, or not it mak
 of leading zeros and if it is in 12-hour- or 24-hour-format. The solution would be
 something like
 
-{% highlight php %}
+```php
 class Constant {
     const HOUR_12H_WITHOUT_LEADING_ZEROS = 'g';
     const HOUR_12H_WITH_LEADING_ZEROS = 'h';
     const HOUR_24H_WITHOUT_LEADING_ZEROS = 'G';
     const HOUR_24H_WITH_LEADING_ZEROS = 'H';
 }
-{% endhighlight %}
+```
 
 Now remember the other `date`-related formatting characters. Or think of
 combining them... Doesn't sound fun anymore, does it? What about "weekday"? Does that
