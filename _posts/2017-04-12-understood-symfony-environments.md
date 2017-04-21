@@ -70,9 +70,7 @@ reported was about my email address, thus I guess they just needed an example em
 address to work with. I'll dedicate a separate post for this.
 
 At the end: Instead of saying "the difference between the stages should be minimal", you
-should say "There should be no difference at all". You only need one environment for every
-regular case. For every special, which goes beyond the functionality of the applications itself,
-you still need environments. But that are one? Or maybe two?
+should say "There is no difference at all". You only need one environment.
 
 
 
