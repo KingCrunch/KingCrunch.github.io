@@ -29,14 +29,15 @@ production. Of course it should _behave_ like production. Exactly. In every sing
 
 On the other hand during development, testing, or for example -- as mentioned in the 
 [Symfony documentation](http://symfony.com/doc/current/configuration/environments.html#creating-a-new-environment) --
-you _want_ different behaviours. You want something different from production, that helps
-you to achieve your goal. Benchmarking? You need a profiler. Development? You want some more
-insight into the applications architectural details. Testing? You need something you can verify
-your assertions against.
+benchmarking you _want_ different behaviours. You want something different from production, 
+that helps you to achieve your goal. Benchmarking? You need a profiler. Development? You want 
+some more insight into the applications architectural details. Testing? You need something 
+you can verify your assertions against.
 
-Still, there are differences between the stages.
+Still, there are differences between the stages. I'll just summarize some points
+I imagine colleagues will ask me.
 
-> But ... Logging?
+> Whats about ... Logging?
 
 Questions: Do you _really_ need specific log levels during acceptance, when
 you don't need them in production? Do you actually look at them? Do you really
@@ -52,16 +53,16 @@ and even on production, when and if needed. Maybe introduce multiple parameters 
 loggers. I see this frequently with java applications and property-files. I guess it's not
 too bad.
 
-> But ... APIs?
+> Whats about ... APIs?
 
 Integrating external APIs into an application is just integrating another external system.
 You thought the database is part of the application? It isn't. It is something the application
-uses [1]. The connection settings for the database are already in the `parameters.yml`, so the 
-settings for every other external should be there. As a side effect you prevent yourself from
-_accidentally_ accessing production APIs from your development platform just because you did
-something wrong with the environment.
+uses [1]. The connection settings for the database are already in the default `parameters.yml`, 
+so the settings for every other external should be there. As a side effect you prevent yourself 
+from _accidentally_ accessing production APIs from your development platform just because you 
+hardcoded the URLs into the `config_*.yml` and did something wrong with the environment.
 
-> But ... Mails?
+> Whats about ... Mails?
 
 Of course you don't want to send mails from your test server to your costumers. It happened
 to me once and theoretically I ordered a "test"-vaccum-cleaner. But to be fair, the bug I
@@ -77,7 +78,8 @@ you still need environments. But that are one? Or maybe two?
 
 [1] You can say, that the database is something the applications "owns" and "controls" in a 
     certain way, but it is not _within_ the application and there may be situations, were
-    others (DBA?) access them.
+    others (DBA?) access them. It's not "yours", it's just something somebody allowed you
+    to use.
 
 [2] Even the [documentation](http://symfony.com/doc/current/configuration/environments.html#executing-an-application-in-different-environments)
     mentions
