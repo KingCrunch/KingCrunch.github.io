@@ -88,4 +88,4 @@ you still need environments. But that are one? Or maybe two?
 > the browser directly via a front controller. In other 
 > words, unlike the other environments, there is no `app_test.php` front controller file.
 
-    Yeah, I did it wrong all the time.
+Yeah, I did it wrong all the time.
